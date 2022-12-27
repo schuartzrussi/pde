@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(find ~/src -mindepth 1 -maxdepth 1 -type d | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+
+tmux has-session -t $selected_name 2>/dev/null
+if [ $? != 0 ]; then
+    tmux new-session -ds $selected_name -c $selected -n code
+    tmux send-keys -t $selected_name 'nvim' C-m
+    tmux new-window -d -n build -t $selected_name -c $selected
+    tmux new-window -d -n git -t $selected_name -c $selected
+    tmux send-keys -t $selected_name:3 'lazygit' C-m
+fi
+
+if [[ -z $TMUX ]]; then
+    tmux attach -t $selected_name
+else
+    tmux switch-client -t $selected_name
+fi
