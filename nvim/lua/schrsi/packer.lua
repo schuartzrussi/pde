@@ -60,4 +60,8 @@ return require('packer').startup(function(use)
 
     -- navigate between vim and tmux splits
     use 'sunaku/tmux-navigate'
+
+    -- show git blame
+    use 'APZelos/blamer.nvim'
+
 end)
