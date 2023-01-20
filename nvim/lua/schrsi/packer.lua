@@ -64,4 +64,7 @@ return require('packer').startup(function(use)
     -- show git blame
     use 'APZelos/blamer.nvim'
 
+    -- zen mode
+    use 'folke/zen-mode.nvim'
+
 end)
