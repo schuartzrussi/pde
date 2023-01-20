@@ -1,1 +1,5 @@
-require("zen-mode").setup {}
+require("zen-mode").setup {
+    window = {
+        width= 0.95
+    }
+}
